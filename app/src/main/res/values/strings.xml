@@ -3,5 +3,6 @@
     <string name="button_addPost">Add Post</string>
     <string name="postTitle">Post Title</string>
     <string name="postDescription">Post Description </string>
-
+    <string name="menu_addPost">Add</string>
+    <string name="menu_cancelPost">Cancel</string>
 </resources>
