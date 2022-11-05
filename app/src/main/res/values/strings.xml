@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RallyReport2</string>
+    <string name="button_addPost">Add Post</string>
+    <string name="postTitle">Post Title</string>
+    <string name="postDescription">Post Description </string>
+
+</resources>
