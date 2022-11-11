@@ -10,10 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
+import wit.pstefans.rallyreport2.adapters.PostListener
 import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
+import wit.pstefans.rallyreport2.models.PostModel
 
-class PostListActivity : AppCompatActivity() {
+class PostListActivity : AppCompatActivity(), PostListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityPostListBinding
@@ -31,7 +33,7 @@ class PostListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PostAdapter(app.posts)
+        binding.recyclerView.adapter = PostAdapter(app.posts.findAll() , this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,7 +57,23 @@ class PostListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.posts.size)
+                notifyItemRangeChanged(0,app.posts.findAll().size)
+            }
+        }
+
+    override fun onPostClick(post: PostModel) {
+        val launcherIntent = Intent(this, PostActivity::class.java)
+        launcherIntent.putExtra("post-edit", post)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.posts.findAll().size)
             }
         }
 }

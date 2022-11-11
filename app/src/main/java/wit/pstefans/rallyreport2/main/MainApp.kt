@@ -3,11 +3,11 @@ package wit.pstefans.rallyreport2.main
 import android.app.Application
 import timber.log.Timber
 import timber.log.Timber.i
-import wit.pstefans.rallyreport2.models.PostModel
+import wit.pstefans.rallyreport2.models.PostMemStore
 
 class MainApp : Application() {
 
-    val posts = ArrayList<PostModel>()
+    val posts = PostMemStore()
 
     override fun onCreate() {
         super.onCreate()

@@ -5,4 +5,6 @@
     <string name="postDescription">Post Description </string>
     <string name="menu_addPost">Add</string>
     <string name="menu_cancelPost">Cancel</string>
+    <string name="enter_post_title"> Please enter a Post Title </string>
+    <string name="save_post"> Save post </string>
 </resources>

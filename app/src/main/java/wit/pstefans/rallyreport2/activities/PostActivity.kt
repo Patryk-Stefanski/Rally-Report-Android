@@ -16,6 +16,7 @@ class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
     var post = PostModel()
+    var edit = false
     lateinit var app : MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,22 +30,29 @@ class PostActivity : AppCompatActivity() {
         app = application as MainApp
         i("Post Activity started...")
 
+        if (intent.hasExtra("post-edit")) {
+            edit=true
+            post = intent.extras?.getParcelable("post-edit")!!
+            binding.postTitle.setText(post.title)
+            binding.description.setText(post.description)
+            binding.btnAdd.setText(R.string.save_post)
+        }
+
         binding.btnAdd.setOnClickListener() {
             post.title = binding.postTitle.text.toString()
             post.description = binding.description.text.toString()
-            if (post.title.isNotEmpty()) {
-                app.posts.add(post.copy())
-                i("add Button Pressed: ${post}")
-                for (i in app.posts.indices) {
-                    i("Posts[$i]:${this.app.posts[i]}")
-                }
-                setResult(RESULT_OK)
-                finish()
-            }
-            else {
-                Snackbar.make(it,"Please Enter a title", Snackbar.LENGTH_LONG)
+            if (post.title.isEmpty()) {
+                Snackbar.make(it,R.string.enter_post_title, Snackbar.LENGTH_LONG)
                     .show()
+            } else {
+                if (edit) {
+                    app.posts.update(post.copy())
+                } else {
+                    app.posts.create(post.copy())
+                }
             }
+            setResult(RESULT_OK)
+            finish()
         }
     }
 
