@@ -17,10 +17,11 @@ class PostMemStore : PostStore{
     }
 
     override fun update(post: PostModel) {
-        var foundPlacemark: PostModel? = posts.find { p -> p.id == post.id }
-        if (foundPlacemark != null) {
-            foundPlacemark.title = post.title
-            foundPlacemark.description = post.description
+        var foundPost: PostModel? = posts.find { p -> p.id == post.id }
+        if (foundPost != null) {
+            foundPost.title = post.title
+            foundPost.description = post.description
+            foundPost.image = post.image
             logAll()
         }
     }
