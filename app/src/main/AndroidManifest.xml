@@ -13,19 +13,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RallyReport2"
         tools:targetApi="31">
-        <activity android:name=".activities.PostListActivity"
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".activities.MapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".activities.PostListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="android.app.lib_name"
+            <meta-data
+                android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity android:name=".activities.PostActivity">
-            <meta-data android:name="android.app.lib_name"
+            <meta-data
+                android:name="android.app.lib_name"
                 android:value="" />
         </activity>
     </application>
+
 </manifest>

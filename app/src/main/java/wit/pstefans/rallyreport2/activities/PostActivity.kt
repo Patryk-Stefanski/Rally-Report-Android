@@ -14,6 +14,7 @@ import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityPostBinding
 import wit.pstefans.rallyreport2.helpers.showImagePicker
 import wit.pstefans.rallyreport2.main.MainApp
+import wit.pstefans.rallyreport2.models.Location
 import wit.pstefans.rallyreport2.models.PostModel
 
 class PostActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class PostActivity : AppCompatActivity() {
     var post = PostModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var location = Location(52.245696, -7.139102, 15f)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +76,16 @@ class PostActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.postLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         registerImagePickerCallback()
+        registerMapCallback()
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -107,6 +120,23 @@ class PostActivity : AppCompatActivity() {
                     }
                     RESULT_CANCELED -> {}
                     else -> {}
+                }
+            }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        }
+                    }
+                    RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
