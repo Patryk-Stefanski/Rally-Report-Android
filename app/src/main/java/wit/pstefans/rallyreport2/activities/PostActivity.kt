@@ -24,7 +24,7 @@ class PostActivity : AppCompatActivity() {
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    var location = Location(52.245696, -7.139102, 15f)
+    //var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +77,12 @@ class PostActivity : AppCompatActivity() {
         }
 
         binding.postLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (post.zoom != 0f) {
+                location.lat =  post.lat
+                location.lng = post.lng
+                location.zoom = post.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
@@ -124,7 +130,7 @@ class PostActivity : AppCompatActivity() {
             }
     }
 
-    private fun registerMapCallback() {
+    pprivate fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
@@ -132,9 +138,12 @@ class PostActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
-                        }
+                            post.lat = location.lat
+                            post.lng = location.lng
+                            post.zoom = location.zoom
+                        } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }

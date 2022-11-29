@@ -22,6 +22,9 @@ class PostMemStore : PostStore{
             foundPost.title = post.title
             foundPost.description = post.description
             foundPost.image = post.image
+            foundPost.lat = post.lat
+            foundPost.lng = post.lng
+            foundPost.zoom = post.zoom
             logAll()
         }
     }
