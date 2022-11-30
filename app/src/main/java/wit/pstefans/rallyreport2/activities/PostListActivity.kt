@@ -18,6 +18,7 @@ import wit.pstefans.rallyreport2.models.PostModel
 class PostListActivity : AppCompatActivity(), PostListener {
 
     lateinit var app: MainApp
+    private var position: Int = 0
     private lateinit var binding: ActivityPostListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +62,10 @@ class PostListActivity : AppCompatActivity(), PostListener {
             }
         }
 
-    override fun onPostClick(post: PostModel) {
+    override fun onPostClick(post: PostModel, position: Int) {
         val launcherIntent = Intent(this, PostActivity::class.java)
         launcherIntent.putExtra("post-edit", post)
+        this.position = position
         getClickResult.launch(launcherIntent)
     }
 
@@ -75,5 +77,8 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 (binding.recyclerView.adapter)?.
                 notifyItemRangeChanged(0,app.posts.findAll().size)
             }
+            else // Deleting
+                if (it.resultCode == 99)
+                        (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 }

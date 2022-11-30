@@ -8,7 +8,7 @@ import wit.pstefans.rallyreport2.databinding.CardPostBinding
 import wit.pstefans.rallyreport2.models.PostModel
 
 interface PostListener {
-    fun onPostClick(post: PostModel)
+    fun onPostClick(post: PostModel, position : Int)
 }
 
 class PostAdapter constructor(
@@ -38,7 +38,7 @@ class PostAdapter constructor(
             binding.postTitle.text = post.title
             binding.description.text = post.description
             Picasso.get().load(post.image).resize(200, 200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onPostClick(post) }
+            binding.root.setOnClickListener { listener.onPostClick(post,adapterPosition) }
         }
     }
 }

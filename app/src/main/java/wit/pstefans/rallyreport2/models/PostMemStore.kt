@@ -16,6 +16,10 @@ class PostMemStore : PostStore{
         logAll()
     }
 
+    override fun delete(post: PostModel) {
+        posts.remove(post)
+    }
+
     override fun update(post: PostModel) {
         var foundPost: PostModel? = posts.find { p -> p.id == post.id }
         if (foundPost != null) {

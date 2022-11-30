@@ -25,12 +25,13 @@ class PostActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     //var location = Location(52.245696, -7.139102, 15f)
+    var edit = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var edit = false
 
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -96,11 +97,17 @@ class PostActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_post, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.item_delete -> {
+                setResult(99)
+                app.posts.delete(post)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }
@@ -130,7 +137,7 @@ class PostActivity : AppCompatActivity() {
             }
     }
 
-    pprivate fun registerMapCallback() {
+    private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
