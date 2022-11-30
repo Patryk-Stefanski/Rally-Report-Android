@@ -48,6 +48,10 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 val launcherIntent = Intent(this, PostActivity::class.java)
                 getResult.launch(launcherIntent)
             }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, PostMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -81,4 +85,10 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 if (it.resultCode == 99)
                         (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
+
+
+    private val mapIntentLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        )    { }
 }
