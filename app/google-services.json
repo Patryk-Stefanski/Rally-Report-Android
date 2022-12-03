@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "428031614994",
+    "project_id": "rallyreport-e4041",
+    "storage_bucket": "rallyreport-e4041.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428031614994:android:4fece367437a32b0ae78cb",
+        "android_client_info": {
+          "package_name": "wit.pstefans.rallyreport2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428031614994-muj72e3cdnpi29mh77ilku59chjadggq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3TrIhovfn2Bq9iR7LB3Db1UINA_03p2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428031614994-muj72e3cdnpi29mh77ilku59chjadggq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
