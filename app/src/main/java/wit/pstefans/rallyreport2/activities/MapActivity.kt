@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityMapBinding
-import wit.pstefans.rallyreport2.models.Location
+import wit.pstefans.rallyreport2.models.post.Location
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback,  GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 

@@ -11,14 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityPostBinding
 import wit.pstefans.rallyreport2.helpers.showImagePicker
 import wit.pstefans.rallyreport2.main.MainApp
-import wit.pstefans.rallyreport2.models.Location
-import wit.pstefans.rallyreport2.models.PostModel
+import wit.pstefans.rallyreport2.models.post.Location
+import wit.pstefans.rallyreport2.models.post.PostModel
 
 class PostActivity : AppCompatActivity() {
 

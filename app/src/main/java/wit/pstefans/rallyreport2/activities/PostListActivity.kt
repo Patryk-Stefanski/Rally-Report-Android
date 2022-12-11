@@ -19,7 +19,7 @@ import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
 import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
-import wit.pstefans.rallyreport2.models.PostModel
+import wit.pstefans.rallyreport2.models.post.PostModel
 
 class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNavigationItemSelectedListener {
 

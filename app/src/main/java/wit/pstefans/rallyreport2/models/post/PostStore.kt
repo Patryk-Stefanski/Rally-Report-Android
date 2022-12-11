@@ -1,4 +1,4 @@
-package wit.pstefans.rallyreport2.models
+package wit.pstefans.rallyreport2.models.post
 
 interface PostStore {
     fun findAll(): List<PostModel>

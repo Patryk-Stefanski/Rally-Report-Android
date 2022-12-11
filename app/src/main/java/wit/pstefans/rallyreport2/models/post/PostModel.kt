@@ -1,4 +1,4 @@
-package wit.pstefans.rallyreport2.models
+package wit.pstefans.rallyreport2.models.post
 
 import android.net.Uri
 import android.os.Parcelable
