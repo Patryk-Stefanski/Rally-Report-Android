@@ -3,9 +3,11 @@ package wit.pstefans.rallyreport2.models
 import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
-data class PostModel(var id: Long = 0,
+data class PostModel(var uid: UUID = UUID.randomUUID(),
+                     var ownerUID: String = "" ,
                      var title:String = "",
                      var description: String = "",
                      var image: Uri = Uri.EMPTY,

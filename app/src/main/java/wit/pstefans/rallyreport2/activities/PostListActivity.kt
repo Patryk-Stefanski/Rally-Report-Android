@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -18,10 +19,12 @@ import wit.pstefans.rallyreport2.models.PostModel
 class PostListActivity : AppCompatActivity(), PostListener {
 
     lateinit var app: MainApp
-    private var position: Int = 0
     private lateinit var binding: ActivityPostListBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        firebaseAuth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
         binding = ActivityPostListBinding.inflate(layoutInflater)
         binding.toolbar.title = title
@@ -52,6 +55,11 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 val launcherIntent = Intent(this, PostMapsActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
             }
+            R.id.item_logout -> {
+                firebaseAuth.signOut()
+                val launcherIntent = Intent(this, LogInActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -66,11 +74,12 @@ class PostListActivity : AppCompatActivity(), PostListener {
             }
         }
 
-    override fun onPostClick(post: PostModel, position: Int) {
-        val launcherIntent = Intent(this, PostActivity::class.java)
-        launcherIntent.putExtra("post-edit", post)
-        this.position = position
-        getClickResult.launch(launcherIntent)
+    override fun onPostClick(post: PostModel) {
+        if (firebaseAuth.uid == post.ownerUID) {
+            val launcherIntent = Intent(this, PostActivity::class.java)
+            launcherIntent.putExtra("post-edit", post)
+            getClickResult.launch(launcherIntent)
+        }
     }
 
     private val getClickResult =
@@ -81,9 +90,6 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 (binding.recyclerView.adapter)?.
                 notifyItemRangeChanged(0,app.posts.findAll().size)
             }
-            else // Deleting
-                if (it.resultCode == 99)
-                        (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
 

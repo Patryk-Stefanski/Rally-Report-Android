@@ -1,12 +1,14 @@
 package wit.pstefans.rallyreport2.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import timber.log.Timber.i
@@ -32,7 +34,6 @@ class PostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -48,6 +49,7 @@ class PostActivity : AppCompatActivity() {
             binding.postTitle.setText(post.title)
             binding.description.setText(post.description)
             binding.btnAdd.setText(R.string.save_post)
+            binding.deletePostBtn.isVisible = true
             Picasso.get()
                 .load(post.image)
                 .into(binding.postImage)
@@ -61,16 +63,30 @@ class PostActivity : AppCompatActivity() {
             if (post.title.isEmpty()) {
                 Snackbar.make(it, R.string.enter_post_title, Snackbar.LENGTH_LONG)
                     .show()
-            } else {
+            }
+            else if (post.description == "") {
+            Snackbar.make(it, R.string.enter_post_description, Snackbar.LENGTH_LONG)
+                .show()
+            }
+            else if (post.image == Uri.EMPTY) {
+                Snackbar.make(it, R.string.select_post_image, Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            else {
                 if (edit) {
                     app.posts.update(post.copy())
-                } else {
+                }
+                else {
                     app.posts.create(post.copy())
                 }
             }
             i("add Button Pressed: $post")
             setResult(RESULT_OK)
             finish()
+        }
+
+        binding.deletePostBtn.setOnClickListener() {
+            app.posts.delete(post.copy())
         }
 
         binding.chooseImage.setOnClickListener {
@@ -103,11 +119,6 @@ class PostActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_delete -> {
-                setResult(99)
-                app.posts.delete(post)
-                finish()
-            }
             R.id.item_cancel -> {
                 finish()
             }

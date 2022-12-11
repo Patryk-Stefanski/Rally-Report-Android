@@ -39,7 +39,7 @@ class PostMapsActivity : AppCompatActivity(),GoogleMap.OnMarkerClickListener {
         app.posts.findAll().forEach {
             val loc = LatLng(it.lat, it.lng)
             val options = MarkerOptions().title(it.title).position(loc)
-            map.addMarker(options)?.tag = it.id
+            map.addMarker(options)?.tag = it.uid.toString()
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             map.setOnMarkerClickListener(this)
         }
