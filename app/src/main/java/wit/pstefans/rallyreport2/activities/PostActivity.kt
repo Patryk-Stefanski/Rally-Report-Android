@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityPostBinding
@@ -22,7 +23,7 @@ import wit.pstefans.rallyreport2.models.PostModel
 class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPostBinding
-    var post = PostModel()
+    private var post = PostModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
@@ -53,24 +54,19 @@ class PostActivity : AppCompatActivity() {
             Picasso.get()
                 .load(post.image)
                 .into(binding.postImage)
-
-            binding.chooseImage.setText(R.string.change_post_image)
+            if (post.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_post_image)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
             post.title = binding.postTitle.text.toString()
             post.description = binding.description.text.toString()
             if (post.title.isEmpty()) {
-                Snackbar.make(it, R.string.enter_post_title, Snackbar.LENGTH_LONG)
-                    .show()
+                Snackbar.make(it, R.string.enter_post_title, Snackbar.LENGTH_LONG).show()
             }
-            else if (post.description == "") {
-            Snackbar.make(it, R.string.enter_post_description, Snackbar.LENGTH_LONG)
-                .show()
-            }
-            else if (post.image == Uri.EMPTY) {
-                Snackbar.make(it, R.string.select_post_image, Snackbar.LENGTH_LONG)
-                    .show()
+            if (post.description == "") {
+                Snackbar.make(it, R.string.enter_post_description, Snackbar.LENGTH_LONG).show()
             }
             else {
                 if (edit) {
@@ -87,6 +83,8 @@ class PostActivity : AppCompatActivity() {
 
         binding.deletePostBtn.setOnClickListener() {
             app.posts.delete(post.copy())
+            setResult(99)
+            finish()
         }
 
         binding.chooseImage.setOnClickListener {

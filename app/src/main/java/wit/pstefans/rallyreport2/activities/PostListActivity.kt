@@ -20,24 +20,21 @@ class PostListActivity : AppCompatActivity(), PostListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityPostListBinding
-    private lateinit var firebaseAuth: FirebaseAuth
+    private var position: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        firebaseAuth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
         binding = ActivityPostListBinding.inflate(layoutInflater)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
 
-
-
         app = application as MainApp
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PostAdapter(app.posts.findAll() , this)
+        binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,7 +53,7 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 mapIntentLauncher.launch(launcherIntent)
             }
             R.id.item_logout -> {
-                firebaseAuth.signOut()
+                FirebaseAuth.getInstance().signOut()
                 val launcherIntent = Intent(this, LogInActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
             }
@@ -74,10 +71,11 @@ class PostListActivity : AppCompatActivity(), PostListener {
             }
         }
 
-    override fun onPostClick(post: PostModel) {
-        if (firebaseAuth.uid == post.ownerUID) {
+    override fun onPostClick(post: PostModel, adapterPosition: Int) {
+        if ( post.ownerUID ==  FirebaseAuth.getInstance().currentUser!!.uid) {
             val launcherIntent = Intent(this, PostActivity::class.java)
             launcherIntent.putExtra("post-edit", post)
+            position = adapterPosition
             getClickResult.launch(launcherIntent)
         }
     }
@@ -90,6 +88,10 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 (binding.recyclerView.adapter)?.
                 notifyItemRangeChanged(0,app.posts.findAll().size)
             }
+            else // Deleting
+                if (it.resultCode == 99)
+                    binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
+                    (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
 
