@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import timber.log.Timber.i
 import wit.pstefans.rallyreport2.databinding.CardPostBinding
 import wit.pstefans.rallyreport2.models.PostModel
 
 interface PostListener {
-    fun onPostClick(post: PostModel)
+    fun onPostClick(post: PostModel, adapterPosition: Int)
 }
 
 class PostAdapter constructor(
@@ -38,7 +39,7 @@ class PostAdapter constructor(
             binding.postTitle.text = post.title
             binding.description.text = post.description
             Picasso.get().load(post.image).resize(200, 200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onPostClick(post) }
+            binding.root.setOnClickListener { listener.onPostClick(post , adapterPosition) }
         }
     }
 }
