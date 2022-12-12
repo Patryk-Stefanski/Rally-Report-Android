@@ -61,6 +61,21 @@
         </activity>
 
         <activity
+            android:name=".activities.CompetitorsListActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.CompetitorActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.LogInActivity"
             android:exported="true">
             <intent-filter>

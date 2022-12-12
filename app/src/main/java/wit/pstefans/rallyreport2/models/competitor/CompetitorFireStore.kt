@@ -1,5 +1,6 @@
 package wit.pstefans.rallyreport2.models.competitor
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -27,6 +28,7 @@ class CompetitorFireStore : CompetitorStore {
     }
 
     override fun create(competitor: CompetitorModel) {
+        competitor.ownerUID = FirebaseAuth.getInstance().currentUser!!.uid
         db.collection(collection).document(competitor.uid).set(competitor)
     }
 
@@ -41,7 +43,7 @@ class CompetitorFireStore : CompetitorStore {
             "navFirstName" to competitor.navFirstName,
             "navLastName" to competitor.navLastName,
             "compNo" to competitor.compNo,
-            "car" to competitor.car,
+            "car" to competitor.carDetails,
         ))
     }
 }

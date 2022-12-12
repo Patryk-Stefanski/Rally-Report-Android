@@ -31,10 +31,9 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
         binding.toolbar.title = title
+        setSupportActionBar(binding.toolbar)
+        setContentView(binding.root)
 
         app = application as MainApp
 
@@ -60,7 +59,6 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
         home.setVisible(false)
         return super.onCreateOptionsMenu(menu)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

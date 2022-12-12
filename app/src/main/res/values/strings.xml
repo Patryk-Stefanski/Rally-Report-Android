@@ -51,6 +51,14 @@
     <string name="return_home">Return Home</string>
     <string name="user">User :</string>
     <string name="user_emails_adress"><![CDATA[<User Emails Adress>]]></string>
+    <string name="menu_event">events</string>
+    <string name="driver_first_name">driver first name</string>
+    <string name="driver_last_name">driver last name</string>
+    <string name="nav_last_name">navigator last name</string>
+    <string name="nav_first_name">navigator first name</string>
+    <string name="car_number">Car Number</string>
+    <string name="save_competitor">save competitor</string>
+    <string name="fill_in_all">"Please Fill in All Detals "</string>
 </resources>
 
 
