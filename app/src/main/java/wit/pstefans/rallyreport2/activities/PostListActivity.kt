@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -57,6 +58,11 @@ class PostListActivity : AppCompatActivity(), PostListener {
                 val launcherIntent = Intent(this, LogInActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
             }
+            R.id.user_management -> {
+                val intent = Intent(this, UserManagement::class.java)
+                getResult.launch(intent)
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -66,13 +72,12 @@ class PostListActivity : AppCompatActivity(), PostListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.posts.findAll().size)
+                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
             }
         }
 
     override fun onPostClick(post: PostModel, adapterPosition: Int) {
-        if ( post.ownerUID ==  FirebaseAuth.getInstance().currentUser!!.uid) {
+        if (post.ownerUID == FirebaseAuth.getInstance().currentUser!!.uid) {
             val launcherIntent = Intent(this, PostActivity::class.java)
             launcherIntent.putExtra("post-edit", post)
             position = adapterPosition
@@ -85,18 +90,16 @@ class PostListActivity : AppCompatActivity(), PostListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.posts.findAll().size)
-            }
-            else // Deleting
+                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
+            } else // Deleting
                 if (it.resultCode == 99)
                     binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
-                    (binding.recyclerView.adapter)?.notifyItemRemoved(position)
+            (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
 
     private val mapIntentLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        )    { }
+        ) { }
 }
