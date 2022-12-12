@@ -34,14 +34,11 @@ class UserManagement : AppCompatActivity() {
             val newPass = binding.newPasswordInput.text
             val newPassRepeat = binding.newPasswordInput2.text
 
-            i(" pass = " + pass + " pass2 = " + newPass + " pass3 = " + newPassRepeat)
-
             val credential = EmailAuthProvider.getCredential(
                 firebaseAuth.currentUser!!.email.toString(), pass.toString()
             )
 
             if (pass.isNotEmpty() && newPass.isNotEmpty() && newPassRepeat.isNotEmpty() && (newPass.toString() == newPassRepeat.toString())) {
-                i("Got here")
                 firebaseAuth.currentUser!!.reauthenticate(credential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {

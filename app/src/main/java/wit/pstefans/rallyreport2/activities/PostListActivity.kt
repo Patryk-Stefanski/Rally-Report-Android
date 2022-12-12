@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.auth.User
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -17,7 +21,7 @@ import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
 import wit.pstefans.rallyreport2.models.PostModel
 
-class PostListActivity : AppCompatActivity(), PostListener {
+class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityPostListBinding
@@ -27,11 +31,23 @@ class PostListActivity : AppCompatActivity(), PostListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostListBinding.inflate(layoutInflater)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = title
+
         app = application as MainApp
+
+        val toggle =
+            ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        binding.navView.setNavigationItemSelectedListener(this)
+
+        val header: View = binding.navView.getHeaderView(0)
+        val userEmail: TextView = header.findViewById(R.id.user_email_textView)
+        userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
@@ -40,28 +56,20 @@ class PostListActivity : AppCompatActivity(), PostListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        val home = menu.findItem(R.id.item_home)
+        home.setVisible(false)
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add -> {
-                val launcherIntent = Intent(this, PostActivity::class.java)
-                getResult.launch(launcherIntent)
+            R.id.item_drawer -> {
+                binding.drawerLayout.openDrawer(GravityCompat.END)
             }
-            R.id.item_map -> {
-                val launcherIntent = Intent(this, PostMapsActivity::class.java)
-                mapIntentLauncher.launch(launcherIntent)
-            }
-            R.id.item_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                val launcherIntent = Intent(this, LogInActivity::class.java)
-                mapIntentLauncher.launch(launcherIntent)
-            }
-            R.id.user_management -> {
-                val intent = Intent(this, UserManagement::class.java)
-                getResult.launch(intent)
-
+            R.id.item_home -> {
+                val launcherIntent = Intent(this, PostListActivity::class.java)
+                startActivity(launcherIntent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -102,4 +110,31 @@ class PostListActivity : AppCompatActivity(), PostListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, PostActivity::class.java)
+                getResult.launch(launcherIntent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, PostMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+
+            }
+            R.id.item_logout -> {
+                FirebaseAuth.getInstance().signOut()
+                val launcherIntent = Intent(this, LogInActivity::class.java)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_user_management -> {
+                val intent = Intent(this, UserManagement::class.java)
+                getResult.launch(intent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

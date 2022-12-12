@@ -3,7 +3,7 @@
     <string name="button_addPost">Add Post</string>
     <string name="postTitle">Post Title</string>
     <string name="postDescription">Post Description </string>
-    <string name="menu_addPost">Add</string>
+    <string name="menu_addPost">Add a New Post</string>
     <string name="menu_cancelPost">Cancel</string>
     <string name="enter_post_title"> Please enter a Post Title </string>
     <string name="enter_post_description"> Please enter a Post Description </string>
@@ -34,12 +34,23 @@
     <string name="signup_button_text">Signup</string>
     <string name="signup_text">Please fill out all the details to signup</string>
     <string name="delete_post">Delete Post</string>
+    <string name="view_posts_on_map">View Map of Posts</string>
+    <string name="user_management">User Management</string>
+    <string name="logout">Logout</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="drawer_header">Drawer Header</string>
     <string name="repeat_new_password">Repeat New Password</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="delete_user">Delete User</string>
     <string name="menu_ReturnHome">Return Home</string>
+    <string name="posts">Posts</string>
+    <string name="view_all_posts_on_map">View All Posts on Map</string>
+    <string name="return_home">Return Home</string>
+    <string name="user">User :</string>
+    <string name="user_emails_adress"><![CDATA[<User Emails Adress>]]></string>
 </resources>
 
 

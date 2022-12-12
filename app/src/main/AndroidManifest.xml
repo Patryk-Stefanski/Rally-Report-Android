@@ -27,6 +27,15 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".activities.DrawerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_post_maps"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <activity
             android:name=".activities.MapActivity"
@@ -35,7 +44,8 @@
 
         <activity
             android:name=".activities.PostListActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
 
             <meta-data
                 android:name="android.app.lib_name"
