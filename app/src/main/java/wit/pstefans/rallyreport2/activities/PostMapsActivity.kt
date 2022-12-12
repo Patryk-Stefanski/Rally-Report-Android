@@ -1,17 +1,22 @@
 package wit.pstefans.rallyreport2.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityPostMapsBinding
 import wit.pstefans.rallyreport2.databinding.ContentPostMapsBinding
 import wit.pstefans.rallyreport2.main.MainApp
 
-class PostMapsActivity : AppCompatActivity(),GoogleMap.OnMarkerClickListener {
+class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     private lateinit var binding: ActivityPostMapsBinding
     private lateinit var contentBinding: ContentPostMapsBinding
@@ -32,6 +37,23 @@ class PostMapsActivity : AppCompatActivity(),GoogleMap.OnMarkerClickListener {
             map = it
             configureMap()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        val drawer = menu.findItem(R.id.item_drawer)
+        drawer.setVisible(false)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_home -> {
+                val launcherIntent = Intent(this, PostListActivity::class.java)
+                startActivity(launcherIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun configureMap() {
