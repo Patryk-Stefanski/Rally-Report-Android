@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -130,6 +131,20 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             R.id.item_user_management -> {
                 val intent = Intent(this, UserManagement::class.java)
                 getResult.launch(intent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_competitor ->{
+                val intent = Intent(this, CompetitorsListActivity::class.java)
+                getResult.launch(intent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_add_competitor ->{
+                val intent = Intent(this, CompetitorActivity::class.java)
+                getResult.launch(intent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_event ->{
+                i("Event Selected In Drawer")
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
         }

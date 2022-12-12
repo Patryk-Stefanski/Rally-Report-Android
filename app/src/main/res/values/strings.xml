@@ -59,6 +59,10 @@
     <string name="car_number">Car Number</string>
     <string name="save_competitor">save competitor</string>
     <string name="fill_in_all">"Please Fill in All Detals "</string>
+    <string name="competitors">Competitors</string>
+    <string name="events">Events</string>
+    <string name="add_competitor">Add Competitor</string>
+    <string name="list_of_competitors">List Of Competitors</string>
 </resources>
 
 

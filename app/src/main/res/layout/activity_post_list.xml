@@ -26,8 +26,6 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/menu_main"
                 app:titleTextColor="@color/colorPrimary" />
-
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
