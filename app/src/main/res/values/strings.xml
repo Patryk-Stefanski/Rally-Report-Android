@@ -34,6 +34,12 @@
     <string name="signup_button_text">Signup</string>
     <string name="signup_text">Please fill out all the details to signup</string>
     <string name="delete_post">Delete Post</string>
+    <string name="view_posts_on_map">View Map of Posts</string>
+    <string name="user_management">User Settings</string>
+    <string name="logout">Logout</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="drawer_header">Drawer Header</string>
     <string name="repeat_new_password">Repeat New Password</string>
     <string name="change_password">Change Password</string>
     <string name="current_password">Current Password</string>

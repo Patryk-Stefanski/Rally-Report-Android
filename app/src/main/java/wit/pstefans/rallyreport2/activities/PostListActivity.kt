@@ -7,17 +7,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.auth.User
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
 import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
+import wit.pstefans.rallyreport2.databinding.DrawerPostsBinding
+
 import wit.pstefans.rallyreport2.main.MainApp
 import wit.pstefans.rallyreport2.models.PostModel
 
-class PostListActivity : AppCompatActivity(), PostListener {
+class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityPostListBinding
@@ -27,11 +32,17 @@ class PostListActivity : AppCompatActivity(), PostListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostListBinding.inflate(layoutInflater)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
 
         app = application as MainApp
+
+        val toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
+        toggle.isDrawerIndicatorEnabled = true
+        binding.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+
+        binding.navView.setNavigationItemSelectedListener(this)
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
@@ -102,4 +113,23 @@ class PostListActivity : AppCompatActivity(), PostListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_add -> {
+                val launcherIntent = Intent(this, PostActivity::class.java)
+                getResult.launch(launcherIntent)
+            }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, PostMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
+            R.id.item_logout -> {
+                FirebaseAuth.getInstance().signOut()
+                val launcherIntent = Intent(this, LogInActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
