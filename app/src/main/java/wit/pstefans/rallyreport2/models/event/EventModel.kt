@@ -11,8 +11,9 @@ import kotlin.collections.ArrayList
 @Parcelize
 data class EventModel (
     var uid: String = UUID.randomUUID().toString(),
+    var ownerUID: String = "",
     var name: String = "",
-    var startDate: LocalDate = LocalDate.now(),
-    var endDate: LocalDate = LocalDate.now(),
-    var competitors: ArrayList<CompetitorModel> = ArrayList()
+    var startDate: String = "",
+    var endDate: String = "",
+    var competitors: String = ""
 ) : Parcelable

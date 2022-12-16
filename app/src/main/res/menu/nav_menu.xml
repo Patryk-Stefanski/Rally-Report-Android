@@ -32,7 +32,8 @@
                 android:id="@+id/item_add_competitor"
                 android:icon="@drawable/ic_baseline_group_add_24"
                 android:title="@string/add_competitor"
-                app:showAsAction="ifRoom" />
+                app:showAsAction="ifRoom"
+                />
         </menu>
     </item>
 
@@ -43,6 +44,11 @@
                 android:icon="@drawable/ic_baseline_event_24"
                 android:title="@string/menu_event"
                 app:showAsAction="always"/>
+            <item
+                android:id="@+id/item_add_event"
+                android:icon="@drawable/ic_baseline_group_add_24"
+                android:title="@string/add_event"
+                app:showAsAction="ifRoom" />
         </menu>
     </item>
 

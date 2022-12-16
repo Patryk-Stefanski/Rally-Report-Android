@@ -26,8 +26,7 @@ class PostActivity : AppCompatActivity() {
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    //var location = Location(52.245696, -7.139102, 15f)
-    var edit = false
+    private var edit = false
 
 
 
@@ -58,7 +57,7 @@ class PostActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAdd.setOnClickListener {
             post.title = binding.postTitle.text.toString()
             post.description = binding.description.text.toString()
             if (post.title.isEmpty()) {
@@ -80,7 +79,7 @@ class PostActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.deletePostBtn.setOnClickListener() {
+        binding.deletePostBtn.setOnClickListener {
             app.posts.delete(post.copy())
             setResult(99)
             finish()

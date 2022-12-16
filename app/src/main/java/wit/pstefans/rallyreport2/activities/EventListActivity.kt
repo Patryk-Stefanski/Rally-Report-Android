@@ -14,28 +14,22 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import timber.log.Timber
 import wit.pstefans.rallyreport2.R
-import wit.pstefans.rallyreport2.adapters.CompAdapter
-import wit.pstefans.rallyreport2.adapters.CompListener
-import wit.pstefans.rallyreport2.adapters.PostAdapter
-import wit.pstefans.rallyreport2.adapters.PostListener
-import wit.pstefans.rallyreport2.databinding.ActivityCompetitorListBinding
-import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
+import wit.pstefans.rallyreport2.adapters.*
+import wit.pstefans.rallyreport2.databinding.ActivityEventListBinding
 import wit.pstefans.rallyreport2.main.MainApp
-import wit.pstefans.rallyreport2.models.competitor.CompetitorModel
-import wit.pstefans.rallyreport2.models.post.PostModel
+import wit.pstefans.rallyreport2.models.event.EventModel
 
-class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationView.OnNavigationItemSelectedListener {
+class EventListActivity : AppCompatActivity(), EventListener, NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityCompetitorListBinding
+    private lateinit var binding: ActivityEventListBinding
     private var position: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCompetitorListBinding.inflate(layoutInflater)
+        binding = ActivityEventListBinding.inflate(layoutInflater)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
@@ -55,12 +49,12 @@ class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationVie
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CompAdapter(app.competitors.findAll(), this)
+        binding.recyclerView.adapter = EventAdapter(app.events.findAll(), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        binding.navView.menu.findItem(R.id.item_competitor).isVisible = false
+        binding.navView.menu.findItem(R.id.item_event).isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -83,14 +77,14 @@ class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationVie
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.competitors.findAll().size)
+                notifyItemRangeChanged(0,app.events.findAll().size)
             }
         }
 
-    override fun onCompClick(comp: CompetitorModel, adapterPosition: Int) {
-        if ( comp.ownerUID ==  FirebaseAuth.getInstance().currentUser!!.uid) {
-            val launcherIntent = Intent(this, CompetitorActivity::class.java)
-            launcherIntent.putExtra("comp-edit", comp)
+    override fun onEventClick(event: EventModel, adapterPosition: Int) {
+        if ( event.ownerUID ==  FirebaseAuth.getInstance().currentUser!!.uid) {
+            val launcherIntent = Intent(this, EventActivity::class.java)
+            launcherIntent.putExtra("event-edit", event)
             position = adapterPosition
             getClickResult.launch(launcherIntent)
         }
@@ -102,11 +96,11 @@ class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationVie
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.competitors.findAll().size)
+                notifyItemRangeChanged(0,app.events.findAll().size)
             }
             else // Deleting
                 if (it.resultCode == 99)
-                    binding.recyclerView.adapter = CompAdapter(app.competitors.findAll(), this)
+                    binding.recyclerView.adapter = EventAdapter(app.events.findAll(), this)
             (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
@@ -144,16 +138,12 @@ class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationVie
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_event ->{
-                val intent = Intent(this, EventListActivity::class.java)
-                startActivity(intent)
-                binding.drawerLayout.closeDrawer(GravityCompat.END)
-            }
             R.id.item_add_event ->{
                 val intent = Intent(this, EventActivity::class.java)
-                startActivity(intent)
+                getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
+
         }
         return super.onOptionsItemSelected(item)
     }

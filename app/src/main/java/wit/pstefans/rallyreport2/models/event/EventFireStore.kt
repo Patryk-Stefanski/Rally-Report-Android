@@ -1,5 +1,6 @@
 package wit.pstefans.rallyreport2.models.event
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -19,14 +20,15 @@ class EventFireStore : EventStore {
         val snapshot = db.collection(collection).get().await()
         events.clear()
         for (document in snapshot) {
-            val competitor = document.toObject<EventModel>()
+            val event = document.toObject<EventModel>()
 
-            events.add(competitor)
+            events.add(event)
         }
         return@runBlocking events
     }
 
     override fun create(event: EventModel) {
+        event.ownerUID = FirebaseAuth.getInstance().currentUser!!.uid
         db.collection(collection).document(event.uid).set(event)
     }
 

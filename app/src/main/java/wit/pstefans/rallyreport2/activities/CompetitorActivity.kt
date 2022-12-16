@@ -18,7 +18,7 @@ class CompetitorActivity : AppCompatActivity() {
     private var comp = CompetitorModel()
     lateinit var app: MainApp
     //var location = Location(52.245696, -7.139102, 15f)
-    var edit = false
+    private var edit = false
 
 
 
@@ -47,7 +47,7 @@ class CompetitorActivity : AppCompatActivity() {
             binding.deleteCompBtn.isVisible = true
         }
 
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAdd.setOnClickListener {
             comp.driverFirstName = binding.driverFirstName.text.toString()
             comp.driverLastName = binding.driverLastName.text.toString()
             comp.navFirstName = binding.navFirstName.text.toString()
@@ -71,7 +71,7 @@ class CompetitorActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.deleteCompBtn.setOnClickListener() {
+        binding.deleteCompBtn.setOnClickListener {
             app.competitors.delete(comp.copy())
             setResult(99)
             finish()

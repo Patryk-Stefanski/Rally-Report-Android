@@ -14,7 +14,6 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -57,7 +56,7 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val home = menu.findItem(R.id.item_home)
-        home.setVisible(false)
+        home.isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -125,7 +124,8 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             }
             R.id.item_logout -> {
                 FirebaseAuth.getInstance().signOut()
-                val launcherIntent = Intent(this, LogInActivity::class.java)
+                val intent = Intent(this, LogInActivity::class.java)
+                startActivity(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
             R.id.item_user_management -> {
@@ -144,7 +144,13 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
             R.id.item_event ->{
-                i("Event Selected In Drawer")
+                val intent = Intent(this, EventListActivity::class.java)
+                getResult.launch(intent)
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            R.id.item_add_event ->{
+                val intent = Intent(this, EventActivity::class.java)
+                getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
         }

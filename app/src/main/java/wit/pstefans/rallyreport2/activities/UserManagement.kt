@@ -43,7 +43,7 @@ class UserManagement : AppCompatActivity() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             firebaseAuth.currentUser!!.updatePassword(newPass.toString())
-                                .addOnCompleteListener { task ->
+                                .addOnCompleteListener {
                                     if (task.isSuccessful) {
                                         i("User password updated.")
                                         Toast.makeText(
@@ -76,7 +76,7 @@ class UserManagement : AppCompatActivity() {
                 firebaseAuth.currentUser!!.reauthenticate(credential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            firebaseAuth.currentUser!!.delete().addOnCompleteListener { task ->
+                            firebaseAuth.currentUser!!.delete().addOnCompleteListener {
                                 if (task.isSuccessful) {
                                     i("User has been Deleted")
                                     Toast.makeText(
