@@ -1,4 +1,4 @@
-package wit.pstefans.rallyreport2.models
+package wit.pstefans.rallyreport2.models.post
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
@@ -7,10 +7,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
-import timber.log.Timber.i
 
 
-class PostMemStore : PostStore{
+class PostMemStore : PostStore {
     private val db = Firebase.firestore
     private val collection = "Posts"
     private var posts = mutableListOf<PostModel>()
@@ -18,7 +17,7 @@ class PostMemStore : PostStore{
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun findAll(): MutableList<PostModel> = runBlocking{
-        val snapshot = db.collection(collection).get().await()
+            val snapshot = db.collection(collection).get().await()
             posts.clear()
             for (document in snapshot) {
                 val post = PostModel()

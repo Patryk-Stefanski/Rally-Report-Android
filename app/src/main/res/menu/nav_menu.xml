@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_menu">
 
 
@@ -19,6 +20,38 @@
         </menu>
     </item>
 
+    <item android:title="@string/competitors">
+        <menu>
+            <item
+                android:id="@+id/item_competitor"
+                android:icon="@drawable/ic_baseline_directions_car_24"
+                android:title="@string/list_of_competitors"
+                app:showAsAction="ifRoom"
+                android:visible="true"/>
+            <item
+                android:id="@+id/item_add_competitor"
+                android:icon="@drawable/ic_baseline_group_add_24"
+                android:title="@string/add_competitor"
+                app:showAsAction="ifRoom"
+                />
+        </menu>
+    </item>
+
+    <item android:title="@string/events">
+        <menu>
+            <item
+                android:id="@+id/item_event"
+                android:icon="@drawable/ic_baseline_event_24"
+                android:title="@string/menu_event"
+                app:showAsAction="always"/>
+            <item
+                android:id="@+id/item_add_event"
+                android:icon="@drawable/ic_baseline_group_add_24"
+                android:title="@string/add_event"
+                app:showAsAction="ifRoom" />
+        </menu>
+    </item>
+
     <item android:title="@string/user_management">
         <menu>
             <item
@@ -31,6 +64,5 @@
                 android:title="@string/user_management"
                 app:showAsAction="always" />
         </menu>
-
     </item>
 </menu>

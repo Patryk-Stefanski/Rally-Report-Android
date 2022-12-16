@@ -14,29 +14,33 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber
 import wit.pstefans.rallyreport2.R
+import wit.pstefans.rallyreport2.adapters.CompAdapter
+import wit.pstefans.rallyreport2.adapters.CompListener
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
+import wit.pstefans.rallyreport2.databinding.ActivityCompetitorListBinding
 import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
+import wit.pstefans.rallyreport2.models.competitor.CompetitorModel
 import wit.pstefans.rallyreport2.models.post.PostModel
 
-class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNavigationItemSelectedListener {
+class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityPostListBinding
+    private lateinit var binding: ActivityCompetitorListBinding
     private var position: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPostListBinding.inflate(layoutInflater)
+        binding = ActivityCompetitorListBinding.inflate(layoutInflater)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
         setContentView(binding.root)
 
         app = application as MainApp
-
         val toggle =
             ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
@@ -44,19 +48,19 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
 
         binding.navView.setNavigationItemSelectedListener(this)
 
+
         val header: View = binding.navView.getHeaderView(0)
         val userEmail: TextView = header.findViewById(R.id.user_email_textView)
         userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
+        binding.recyclerView.adapter = CompAdapter(app.competitors.findAll(), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        val home = menu.findItem(R.id.item_home)
-        home.isVisible = false
+        binding.navView.menu.findItem(R.id.item_competitor).isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -78,14 +82,15 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.competitors.findAll().size)
             }
         }
 
-    override fun onPostClick(post: PostModel, adapterPosition: Int) {
-        if (post.ownerUID == FirebaseAuth.getInstance().currentUser!!.uid) {
-            val launcherIntent = Intent(this, PostActivity::class.java)
-            launcherIntent.putExtra("post-edit", post)
+    override fun onCompClick(comp: CompetitorModel, adapterPosition: Int) {
+        if ( comp.ownerUID ==  FirebaseAuth.getInstance().currentUser!!.uid) {
+            val launcherIntent = Intent(this, CompetitorActivity::class.java)
+            launcherIntent.putExtra("comp-edit", comp)
             position = adapterPosition
             getClickResult.launch(launcherIntent)
         }
@@ -96,10 +101,12 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
-            } else // Deleting
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.competitors.findAll().size)
+            }
+            else // Deleting
                 if (it.resultCode == 99)
-                    binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
+                    binding.recyclerView.adapter = CompAdapter(app.competitors.findAll(), this)
             (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
@@ -107,7 +114,7 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
     private val mapIntentLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
-        ) { }
+        )    { }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -120,7 +127,6 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
                 val launcherIntent = Intent(this, PostMapsActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
-
             }
             R.id.item_logout -> {
                 FirebaseAuth.getInstance().signOut()
@@ -133,11 +139,6 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_competitor ->{
-                val intent = Intent(this, CompetitorsListActivity::class.java)
-                getResult.launch(intent)
-                binding.drawerLayout.closeDrawer(GravityCompat.END)
-            }
             R.id.item_add_competitor ->{
                 val intent = Intent(this, CompetitorActivity::class.java)
                 getResult.launch(intent)
@@ -145,12 +146,12 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             }
             R.id.item_event ->{
                 val intent = Intent(this, EventListActivity::class.java)
-                getResult.launch(intent)
+                startActivity(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
             R.id.item_add_event ->{
                 val intent = Intent(this, EventActivity::class.java)
-                getResult.launch(intent)
+                startActivity(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
         }

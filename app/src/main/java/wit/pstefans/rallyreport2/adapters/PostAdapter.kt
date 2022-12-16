@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import timber.log.Timber.i
 import wit.pstefans.rallyreport2.databinding.CardPostBinding
-import wit.pstefans.rallyreport2.models.PostModel
+import wit.pstefans.rallyreport2.models.post.PostModel
 
 interface PostListener {
     fun onPostClick(post: PostModel, adapterPosition: Int)

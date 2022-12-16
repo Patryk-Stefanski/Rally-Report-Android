@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -20,7 +19,7 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     private lateinit var binding: ActivityPostMapsBinding
     private lateinit var contentBinding: ContentPostMapsBinding
-    lateinit var map: GoogleMap
+    private lateinit var map: GoogleMap
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         val drawer = menu.findItem(R.id.item_drawer)
-        drawer.setVisible(false)
+        drawer.isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -60,7 +59,7 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         map.uiSettings.isZoomControlsEnabled = true
         app.posts.findAll().forEach {
             val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
+            val options = MarkerOptions().title(it.title).position(loc).snippet(it.description)
             map.addMarker(options)?.tag = it.mapID
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             map.setOnMarkerClickListener(this)
@@ -94,6 +93,7 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     override fun onMarkerClick(marker: Marker): Boolean {
         contentBinding.currentTitle.text = marker.title
+        contentBinding.currentDescription.text = marker.snippet
 
         return false
     }
