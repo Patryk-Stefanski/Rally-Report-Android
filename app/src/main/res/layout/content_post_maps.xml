@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/post_imageView"
                 android:layout_width="127dp"
                 android:layout_height="110dp"
                 android:layout_marginEnd="16dp"
@@ -38,7 +38,6 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="32dp"
                 android:text="Title"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +48,6 @@
                 android:layout_width="145dp"
                 android:layout_height="30dp"
                 android:text="Description"
-                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintHorizontal_bias="0.494"

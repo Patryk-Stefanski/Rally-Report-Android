@@ -25,8 +25,7 @@
                 android:id="@+id/toolbarAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:menu="@menu/menu_post"
-                app:titleTextColor="@color/colorPrimary" />
+                app:menu="@menu/menu_post" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -133,7 +132,6 @@
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="Add Event"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
                 <Button
@@ -145,7 +143,6 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="Delete Event"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:visibility="gone" />
 

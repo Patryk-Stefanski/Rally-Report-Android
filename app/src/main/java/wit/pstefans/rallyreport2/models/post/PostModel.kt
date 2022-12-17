@@ -3,6 +3,7 @@ package wit.pstefans.rallyreport2.models.post
 import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.net.URI
 import java.util.*
 
 @Parcelize
@@ -13,6 +14,7 @@ data class PostModel(
     var title:String = "",
     var description: String = "",
     var image: Uri = Uri.EMPTY,
+    var imageRef: String = "",
     var lat: Double = 0.0,
     var lng: Double = 0.0,
     var zoom: Float = 0f) : Parcelable

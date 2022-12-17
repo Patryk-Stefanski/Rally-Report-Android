@@ -16,7 +16,6 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
