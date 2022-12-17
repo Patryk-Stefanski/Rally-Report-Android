@@ -13,6 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RallyReport2"
         tools:targetApi="31">
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -27,57 +34,50 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.MapActivity"
             android:exported="false"
             android:label="@string/title_activity_map" />
-
         <activity
             android:name=".activities.PostListActivity"
             android:exported="false"
             android:theme="@style/Theme.RallyReport2.NoActionBar">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.PostActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.CompetitorsListActivity"
-            android:exported="false">
-
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.CompetitorActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.LogInActivity"
+            android:configChanges="uiMode"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.SignupActivity"
             android:exported="false">
@@ -85,21 +85,31 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".activities.UserManagement"
             android:exported="false"
-            android:label="@string/title_activity_map" />
-
+            android:theme="@style/Theme.RallyReport2.NoActionBar" />
         <activity
             android:name=".activities.EventActivity"
             android:exported="false"
-            android:label="@string/title_activity_map" />
-
+            android:theme="@style/Theme.RallyReport2.NoActionBar" />
         <activity
             android:name=".activities.EventListActivity"
             android:exported="false"
-            android:label="@string/title_activity_map" />
+            android:theme="@style/Theme.RallyReport2.NoActionBar" />
+
+
+        <activity android:name=".activities.SplashScreenActivity"
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>

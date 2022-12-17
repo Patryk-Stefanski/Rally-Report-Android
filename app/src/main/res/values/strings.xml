@@ -69,6 +69,7 @@
     <string name="event_name">Event Name</string>
     <string name="save_event">Save Event</string>
     <string name="add_event">Add Event</string>
+    <string name="version_placeholder">Rally Report App \n V1.4.0</string>
 </resources>
 
 

@@ -2,6 +2,7 @@ package wit.pstefans.rallyreport2.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,10 +11,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
@@ -21,7 +24,8 @@ import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
 import wit.pstefans.rallyreport2.models.post.PostModel
 
-class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNavigationItemSelectedListener {
+class PostListActivity : AppCompatActivity(), PostListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityPostListBinding
@@ -68,6 +72,13 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
             R.id.item_home -> {
                 val launcherIntent = Intent(this, PostListActivity::class.java)
                 startActivity(launcherIntent)
+            }
+            R.id.item_nightMode -> {
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
             }
         }
         return super.onOptionsItemSelected(item)
@@ -120,7 +131,6 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
                 val launcherIntent = Intent(this, PostMapsActivity::class.java)
                 mapIntentLauncher.launch(launcherIntent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
-
             }
             R.id.item_logout -> {
                 FirebaseAuth.getInstance().signOut()
@@ -133,22 +143,22 @@ class PostListActivity : AppCompatActivity(), PostListener, NavigationView.OnNav
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_competitor ->{
+            R.id.item_competitor -> {
                 val intent = Intent(this, CompetitorsListActivity::class.java)
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_add_competitor ->{
+            R.id.item_add_competitor -> {
                 val intent = Intent(this, CompetitorActivity::class.java)
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_event ->{
+            R.id.item_event -> {
                 val intent = Intent(this, EventListActivity::class.java)
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)
             }
-            R.id.item_add_event ->{
+            R.id.item_add_event -> {
                 val intent = Intent(this, EventActivity::class.java)
                 getResult.launch(intent)
                 binding.drawerLayout.closeDrawer(GravityCompat.END)

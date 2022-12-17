@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/item_nightMode"
+        android:icon="@drawable/ic_baseline_mode_night_24"
+        android:title="@string/return_home"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
+
+
+    <item
         android:id="@+id/item_home"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/return_home"
