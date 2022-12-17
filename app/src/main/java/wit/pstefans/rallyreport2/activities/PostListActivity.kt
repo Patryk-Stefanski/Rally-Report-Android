@@ -50,7 +50,10 @@ class PostListActivity : AppCompatActivity(), PostListener,
 
         val header: View = binding.navView.getHeaderView(0)
         val userEmail: TextView = header.findViewById(R.id.user_email_textView)
-        userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
+        if (FirebaseAuth.getInstance().currentUser != null){
+            userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
+        }
+
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager

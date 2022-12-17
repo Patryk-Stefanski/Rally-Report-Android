@@ -50,7 +50,7 @@
     <string name="view_all_posts_on_map">View All Posts on Map</string>
     <string name="return_home">Return Home</string>
     <string name="user">User :</string>
-    <string name="user_emails_adress"><![CDATA[<User Emails Adress>]]></string>
+    <string name="user_emails_address"><![CDATA[<User Emails Address>]]></string>
     <string name="menu_event">events</string>
     <string name="driver_first_name">driver first name</string>
     <string name="driver_last_name">driver last name</string>
