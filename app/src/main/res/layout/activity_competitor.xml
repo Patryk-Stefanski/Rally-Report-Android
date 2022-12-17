@@ -25,7 +25,6 @@
                 android:id="@+id/toolbarAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleTextColor="@color/colorPrimary"
                 app:menu="@menu/menu_post"
                 />
         </com.google.android.material.appbar.AppBarLayout>
@@ -56,7 +55,6 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
                     <EditText
@@ -70,7 +68,6 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
 
@@ -92,7 +89,6 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
                     <EditText
@@ -106,7 +102,6 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="8dp"
-                        android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
                 </GridLayout>
@@ -121,7 +116,6 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
                 <EditText
@@ -134,7 +128,6 @@
                     android:maxLength="30"
                     android:maxLines="1"
                     android:padding="8dp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
                 <Button
@@ -147,7 +140,6 @@
                     android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="Add Competitor"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 
                 <Button
@@ -159,7 +151,6 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:text="Delete Competitor"
-                    android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
                     android:visibility="gone" />
 

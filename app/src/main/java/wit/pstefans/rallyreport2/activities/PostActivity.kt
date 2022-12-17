@@ -74,7 +74,6 @@ class PostActivity : AppCompatActivity() {
                     app.posts.create(post.copy())
                 }
             }
-            i("add Button Pressed: $post")
             setResult(RESULT_OK)
             finish()
         }

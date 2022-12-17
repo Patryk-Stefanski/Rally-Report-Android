@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityPostMapsBinding
 import wit.pstefans.rallyreport2.databinding.ContentPostMapsBinding
@@ -59,7 +60,7 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         map.uiSettings.isZoomControlsEnabled = true
         app.posts.findAll().forEach {
             val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc).snippet(it.description)
+            val options = MarkerOptions().title(it.title).position(loc).snippet(it.description + "-img-" + it.imageRef)
             map.addMarker(options)?.tag = it.mapID
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
             map.setOnMarkerClickListener(this)
@@ -92,8 +93,11 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
+        val description = marker.snippet!!.split("-img-")[0]
+        val imageRef = marker.snippet!!.split("-img-")[1]
         contentBinding.currentTitle.text = marker.title
-        contentBinding.currentDescription.text = marker.snippet
+        contentBinding.currentDescription.text = description
+        Picasso.get().load(imageRef).resize(200, 200).into(contentBinding.postImageView)
 
         return false
     }
