@@ -2,6 +2,7 @@ package wit.pstefans.rallyreport2.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -10,11 +11,13 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import timber.log.Timber
+import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.CompAdapter
 import wit.pstefans.rallyreport2.adapters.CompListener
@@ -72,6 +75,13 @@ class CompetitorsListActivity : AppCompatActivity(), CompListener, NavigationVie
             R.id.item_home -> {
                 val launcherIntent = Intent(this, PostListActivity::class.java)
                 startActivity(launcherIntent)
+            }
+            R.id.item_nightMode -> {
+                if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_NO) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }
             }
         }
         return super.onOptionsItemSelected(item)

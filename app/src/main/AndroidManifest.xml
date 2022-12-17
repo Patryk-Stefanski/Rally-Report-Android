@@ -45,7 +45,8 @@
 
         <activity
             android:name=".activities.PostActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -53,22 +54,24 @@
 
         <activity
             android:name=".activities.CompetitorsListActivity"
-            android:exported="false">
-
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.CompetitorActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.RallyReport2.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".activities.LogInActivity"
-            android:exported="true">
+            android:exported="true"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -89,17 +92,17 @@
         <activity
             android:name=".activities.UserManagement"
             android:exported="false"
-            android:label="@string/title_activity_map" />
+            android:theme="@style/Theme.RallyReport2.NoActionBar"/>
 
         <activity
             android:name=".activities.EventActivity"
             android:exported="false"
-            android:label="@string/title_activity_map" />
+            android:theme="@style/Theme.RallyReport2.NoActionBar"/>
 
         <activity
             android:name=".activities.EventListActivity"
             android:exported="false"
-            android:label="@string/title_activity_map" />
+            android:theme="@style/Theme.RallyReport2.NoActionBar" />
     </application>
 
 </manifest>
