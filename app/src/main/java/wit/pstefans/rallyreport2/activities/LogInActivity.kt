@@ -1,6 +1,8 @@
 package wit.pstefans.rallyreport2.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -18,11 +20,11 @@ import com.google.firebase.auth.GoogleAuthProvider
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.databinding.ActivityLoginBinding
 
-class LogInActivity: AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var googleSignInClient : GoogleSignInClient
-    private val Req_Code:Int=123
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val Req_Code: Int = 123
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +46,10 @@ class LogInActivity: AppCompatActivity() {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this , gso)
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
         googleSignInClient.revokeAccess()
 
-        binding.googleLoginBtn.setOnClickListener{
+        binding.googleLoginBtn.setOnClickListener {
             signInGoogle()
         }
 
@@ -62,7 +64,15 @@ class LogInActivity: AppCompatActivity() {
                         val intent = Intent(this, PostListActivity::class.java)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("Error").setMessage(it.exception.toString())
+                            .setIcon(R.drawable.ic_baseline_error_outline_24).setNeutralButton(
+                                "Ok"
+                            ) { dialogInterface, _ -> // dismiss dialog
+                                dialogInterface.dismiss()
+                            }
+                        builder.show()
+
 
                     }
                 }
@@ -75,40 +85,40 @@ class LogInActivity: AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if(firebaseAuth.currentUser != null){
+        if (firebaseAuth.currentUser != null) {
             startActivity(Intent(this, PostListActivity::class.java))
             finish()
         }
     }
 
-    private  fun signInGoogle(){
-        val signInIntent:Intent=googleSignInClient.signInIntent
-        startActivityForResult(signInIntent,Req_Code)
+    private fun signInGoogle() {
+        val signInIntent: Intent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, Req_Code)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==Req_Code){
-            val task:Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+        if (requestCode == Req_Code) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
         }
     }
 
-    private fun handleResult(completedTask: Task<GoogleSignInAccount>){
+    private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val account: GoogleSignInAccount? =completedTask.getResult(ApiException::class.java)
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
                 firebaseSignIn(account)
             }
-        } catch (e:ApiException){
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show()
+        } catch (e: ApiException) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun firebaseSignIn(account: GoogleSignInAccount){
-        val credential= GoogleAuthProvider.getCredential(account.idToken,null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {task->
-            if(task.isSuccessful) {
+    private fun firebaseSignIn(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 val intent = Intent(this, PostListActivity::class.java)
                 startActivity(intent)
                 finish()

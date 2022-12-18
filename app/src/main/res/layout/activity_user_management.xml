@@ -34,11 +34,13 @@
         android:layout_width="271dp"
         android:layout_height="40dp"
         android:hint="@string/repeat_new_password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.374" />
+        app:layout_constraintVertical_bias="0.374"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/change_password_button2"
@@ -47,6 +49,7 @@
         android:background="#444444"
         android:text="@string/change_password"
         android:textColor="#FFFFFF"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,11 +61,13 @@
         android:layout_width="271dp"
         android:layout_height="48dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.647"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView2"
@@ -83,22 +88,26 @@
         android:layout_width="271dp"
         android:layout_height="48dp"
         android:hint="@string/current_password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.183"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/new_password_input"
         android:layout_width="271dp"
         android:layout_height="40dp"
         android:hint="@string/new_password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.279"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/change_password_button"

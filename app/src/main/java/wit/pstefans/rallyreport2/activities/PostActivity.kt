@@ -50,7 +50,7 @@ class PostActivity : AppCompatActivity() {
             binding.btnAdd.setText(R.string.save_post)
             binding.deletePostBtn.isVisible = true
             Picasso.get()
-                .load(post.image)
+                .load(post.imageRef)
                 .into(binding.postImage)
             if (post.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.change_post_image)
@@ -115,6 +115,7 @@ class PostActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_cancel -> {
+                setResult(RESULT_OK)
                 finish()
             }
         }
