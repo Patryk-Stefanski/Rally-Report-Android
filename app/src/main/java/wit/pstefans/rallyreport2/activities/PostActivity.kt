@@ -25,9 +25,8 @@ class PostActivity : AppCompatActivity() {
     private var post = PostModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
-    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher: ActivityResultLauncher<Intent>
     private var edit = false
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,13 +48,16 @@ class PostActivity : AppCompatActivity() {
             binding.description.setText(post.description)
             binding.btnAdd.setText(R.string.save_post)
             binding.deletePostBtn.isVisible = true
-            Picasso.get()
-                .load(post.imageRef)
-                .into(binding.postImage)
+            if (post.imageRef != "") {
+                Picasso.get()
+                    .load(post.imageRef)
+                    .into(binding.postImage)
+            }
             if (post.image != Uri.EMPTY) {
                 binding.chooseImage.setText(R.string.change_post_image)
             }
         }
+
 
         binding.btnAdd.setOnClickListener {
             post.title = binding.postTitle.text.toString()
@@ -65,12 +67,10 @@ class PostActivity : AppCompatActivity() {
             }
             if (post.description == "") {
                 Snackbar.make(it, R.string.enter_post_description, Snackbar.LENGTH_LONG).show()
-            }
-            else {
+            } else {
                 if (edit) {
                     app.posts.update(post.copy())
-                }
-                else {
+                } else {
                     app.posts.create(post.copy())
                 }
             }
@@ -91,7 +91,7 @@ class PostActivity : AppCompatActivity() {
         binding.postLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
             if (post.zoom != 0f) {
-                location.lat =  post.lat
+                location.lat = post.lat
                 location.lng = post.lng
                 location.zoom = post.zoom
             }
@@ -152,14 +152,16 @@ class PostActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            val location =
+                                result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
                             post.lat = location.lat
                             post.lng = location.lng
                             post.zoom = location.zoom
                         } // end of if
                     }
-                    RESULT_CANCELED -> { } else -> { }
+                    RESULT_CANCELED -> {}
+                    else -> {}
                 }
             }
     }

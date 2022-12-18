@@ -16,12 +16,14 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
 import wit.pstefans.rallyreport2.adapters.PostAdapter
 import wit.pstefans.rallyreport2.adapters.PostListener
 import wit.pstefans.rallyreport2.databinding.ActivityPostListBinding
 import wit.pstefans.rallyreport2.main.MainApp
 import wit.pstefans.rallyreport2.models.post.PostModel
+import java.util.*
 
 class PostListActivity : AppCompatActivity(), PostListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -47,16 +49,30 @@ class PostListActivity : AppCompatActivity(), PostListener,
 
         binding.navView.setNavigationItemSelectedListener(this)
 
+
         val header: View = binding.navView.getHeaderView(0)
         val userEmail: TextView = header.findViewById(R.id.user_email_textView)
-        if (FirebaseAuth.getInstance().currentUser != null){
+        if (FirebaseAuth.getInstance().currentUser != null) {
             userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
         }
 
+        val postlist = app.posts.findAll()
+
+        binding.checkbox.setOnClickListener {
+            if (binding.checkbox.isChecked) {
+                postlist.sortBy { it.description }
+                i("checked")
+            } else {
+                i("unchecked")
+                postlist.sortBy { it.title }
+
+            }
+            (binding.recyclerView.adapter)?.notifyDataSetChanged()
+        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
+        binding.recyclerView.adapter = PostAdapter(postlist, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

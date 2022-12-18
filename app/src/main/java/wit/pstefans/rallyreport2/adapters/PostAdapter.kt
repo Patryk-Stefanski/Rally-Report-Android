@@ -36,7 +36,9 @@ class PostAdapter constructor(
         fun bind(post: PostModel, listener: PostListener) {
             binding.postTitle.text = post.title
             binding.description.text = post.description
-            Picasso.get().load(post.imageRef).resize(200, 200).into(binding.imageIcon)
+            if(post.imageRef != "") {
+                Picasso.get().load(post.imageRef).resize(200, 200).into(binding.imageIcon)
+            }
             binding.root.setOnClickListener { listener.onPostClick(post , adapterPosition) }
         }
     }
