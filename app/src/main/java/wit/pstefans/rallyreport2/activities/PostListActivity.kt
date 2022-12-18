@@ -56,18 +56,18 @@ class PostListActivity : AppCompatActivity(), PostListener,
             userEmail.text = FirebaseAuth.getInstance().currentUser!!.email
         }
 
-        val postlist = app.posts.findAll()
+        var postlist = app.posts.findAll()
 
         binding.checkbox.setOnClickListener {
+            postlist = app.posts.findAll()
             if (binding.checkbox.isChecked) {
                 postlist.sortBy { it.description }
                 i("checked")
             } else {
                 i("unchecked")
                 postlist.sortBy { it.title }
-
             }
-            (binding.recyclerView.adapter)?.notifyDataSetChanged()
+            binding.recyclerView.adapter = PostAdapter(postlist, this)
         }
 
         val layoutManager = LinearLayoutManager(this)
@@ -107,6 +107,7 @@ class PostListActivity : AppCompatActivity(), PostListener,
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
+                binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
                 (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
             }
         }
@@ -125,6 +126,7 @@ class PostListActivity : AppCompatActivity(), PostListener,
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
+                binding.recyclerView.adapter = PostAdapter(app.posts.findAll(), this)
                 (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.posts.findAll().size)
             } else // Deleting
                 if (it.resultCode == 99)
