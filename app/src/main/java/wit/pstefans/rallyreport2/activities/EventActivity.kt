@@ -74,7 +74,14 @@ class EventActivity : AppCompatActivity() {
 
 
             if (event.name.isEmpty()) {
-                Snackbar.make(it, R.string.fill_in_all, Snackbar.LENGTH_LONG).show()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Error").setMessage(R.string.fill_in_all)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24).setNeutralButton(
+                        "Ok"
+                    ) { dialogInterface, _ -> // dismiss dialog
+                        dialogInterface.dismiss()
+                    }
+                builder.show()
             } else {
                 if (edit) {
                     app.events.update(event.copy())
@@ -145,7 +152,7 @@ class EventActivity : AppCompatActivity() {
 
             competitors.forEach {
                 compArray[i] =
-                    "Car No :" + it.compNo.toString() + "\n" + "Driver Name : " + it.driverFirstName + " " + it.driverLastName + "\n" + "Navigator Name : " + it.navFirstName + " " + it.navLastName + "\n" + i++
+                    "Car No :" + it.compNo + "\n" + "Driver Name : " + it.driverFirstName + " " + it.driverLastName + "\n" + "Navigator Name : " + it.navFirstName + " " + it.navLastName + "\n" + i++
             }
 
             val compList: ArrayList<Int> = ArrayList()

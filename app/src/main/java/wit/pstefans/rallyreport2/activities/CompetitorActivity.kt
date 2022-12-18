@@ -1,5 +1,6 @@
 package wit.pstefans.rallyreport2.activities
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -52,11 +53,20 @@ class CompetitorActivity : AppCompatActivity() {
             comp.driverLastName = binding.driverLastName.text.toString()
             comp.navFirstName = binding.navFirstName.text.toString()
             comp.navLastName = binding.navLastName.text.toString()
-            comp.compNo = binding.compNo.text.toString().toInt()
+            comp.compNo = binding.compNo.text.toString()
             comp.carDetails = binding.carDetails.text.toString()
 
-            if ( comp.driverFirstName.isEmpty() || comp.driverLastName.isEmpty() || comp.navFirstName.isEmpty() || comp.navLastName.isEmpty() || comp.compNo == 0 ) {
-                Snackbar.make(it, R.string.fill_in_all, Snackbar.LENGTH_LONG).show()
+            if ( comp.driverFirstName.isEmpty() || comp.driverLastName.isEmpty() || comp.navFirstName.isEmpty() || comp.navLastName.isEmpty() || comp.compNo == "" ) {
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Error").setMessage(R.string.fill_in_all)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24).setNeutralButton(
+                        "Ok"
+                    ) { dialogInterface, _ -> // dismiss dialog
+                        setResult(RESULT_OK)
+                        finish()
+                        dialogInterface.dismiss()
+                    }
+                builder.show()
             }
 
             else {
@@ -66,9 +76,10 @@ class CompetitorActivity : AppCompatActivity() {
                 else {
                     app.competitors.create(comp.copy())
                 }
+                setResult(RESULT_OK)
+                finish()
             }
-            setResult(RESULT_OK)
-            finish()
+
         }
 
         binding.deleteCompBtn.setOnClickListener {
