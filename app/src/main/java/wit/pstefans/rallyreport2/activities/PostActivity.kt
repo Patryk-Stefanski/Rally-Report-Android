@@ -1,5 +1,6 @@
 package wit.pstefans.rallyreport2.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,6 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import timber.log.Timber.i
 import wit.pstefans.rallyreport2.R
@@ -63,19 +63,38 @@ class PostActivity : AppCompatActivity() {
             post.title = binding.postTitle.text.toString()
             post.description = binding.description.text.toString()
             if (post.title.isEmpty()) {
-                Snackbar.make(it, R.string.enter_post_title, Snackbar.LENGTH_LONG).show()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Error").setMessage(R.string.enter_post_title)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24).setNeutralButton(
+                        "Ok"
+                    ) { dialogInterface, _ -> // dismiss dialog
+                        dialogInterface.dismiss()
+                        setResult(RESULT_OK)
+                        finish()
+                    }
+                builder.show()
             }
             if (post.description == "") {
-                Snackbar.make(it, R.string.enter_post_description, Snackbar.LENGTH_LONG).show()
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Error").setMessage(R.string.enter_post_description)
+                    .setIcon(R.drawable.ic_baseline_error_outline_24).setNeutralButton(
+                        "Ok"
+                    ) { dialogInterface, _ -> // dismiss dialog
+                        dialogInterface.dismiss()
+                        setResult(RESULT_OK)
+                        finish()
+                    }
+                builder.show()
             } else {
                 if (edit) {
                     app.posts.update(post.copy())
                 } else {
                     app.posts.create(post.copy())
                 }
+                setResult(RESULT_OK)
+                finish()
             }
-            setResult(RESULT_OK)
-            finish()
+
         }
 
         binding.deletePostBtn.setOnClickListener {

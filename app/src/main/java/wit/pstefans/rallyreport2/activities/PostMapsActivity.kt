@@ -43,6 +43,8 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         menuInflater.inflate(R.menu.menu_main, menu)
         val drawer = menu.findItem(R.id.item_drawer)
         drawer.isVisible = false
+        val nightMode = menu.findItem(R.id.item_nightMode)
+        nightMode.isVisible = false
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -97,8 +99,9 @@ class PostMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         val imageRef = marker.snippet!!.split("-img-")[1]
         contentBinding.currentTitle.text = marker.title
         contentBinding.currentDescription.text = description
+        if( imageRef != ""){
         Picasso.get().load(imageRef).resize(200, 200).into(contentBinding.postImageView)
-
+        }
         return false
     }
 }

@@ -11,6 +11,6 @@ data class CompetitorModel (
     var driverLastName: String = "",
     var navFirstName : String = "",
     var navLastName: String = "",
-    var compNo: Int = 0,
+    var compNo: String = "",
     var carDetails: String = ""
 ) : Parcelable
